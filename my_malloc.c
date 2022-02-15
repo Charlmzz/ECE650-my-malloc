@@ -21,6 +21,8 @@ void *ff_malloc(size_t size){
             malloc_n *split = (malloc_n *) ((void*)curr+nodeSize+(curr->sz)-total);
             split->sz = size;
             curr->sz -=total;
+            split->prev = NULL;
+            split->next = NULL;
             return (void *)split+nodeSize;
         }else if(curr->sz>=size && curr->sz<total){ //if current chunk's available size is greater
             //than user's requirement, but cannot hold extra metadata, we assign current chunk directly to user
@@ -86,6 +88,8 @@ void *bf_malloc(size_t size){
             malloc_n *split = (malloc_n *) ((void*)rst+nodeSize+(rst->sz)-total);
             split->sz = size;
             rst->sz -=total;
+            split->prev = NULL;
+            split->next = NULL;
             return (void *)split+nodeSize;    
         }else{
             if (rst->prev!=NULL){
